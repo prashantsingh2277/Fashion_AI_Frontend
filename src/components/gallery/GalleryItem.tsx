@@ -1,0 +1,51 @@
+
+import { SocialShareButtons } from '@/components/ai-outfit/SocialShareButtons';
+
+interface GalleryItemProps {
+  item: {
+    id: string;
+    imageUrl: string;
+    prompt: string;
+    userName: string;
+    userLiked: boolean;
+    likes: number;
+  };
+  layout: 'grid' | 'masonry';
+  onLike: (itemId: string) => void;
+  onAddToGallery: (itemId: string) => void;
+}
+
+export function GalleryItem({ item, layout, onLike, onAddToGallery }: GalleryItemProps) {
+  return (
+    <div 
+      className={`bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow ${
+        layout === 'masonry' ? 'mb-6 break-inside-avoid' : ''
+      }`}
+    >
+      <div className="relative aspect-[3/4] overflow-hidden">
+        <img 
+          src={item.imageUrl} 
+          alt={item.prompt}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="p-4">
+        <div className="flex justify-between items-start mb-3">
+          <div>
+            <h3 className="font-medium line-clamp-1">{item.prompt}</h3>
+            <p className="text-sm text-gray-500">by {item.userName}</p>
+          </div>
+        </div>
+        
+        <SocialShareButtons 
+          designId={item.id}
+          imageUrl={item.imageUrl}
+          onAddToGallery={() => onAddToGallery(item.id)}
+          liked={item.userLiked}
+          onLike={() => onLike(item.id)}
+          likesCount={item.likes}
+        />
+      </div>
+    </div>
+  );
+}
