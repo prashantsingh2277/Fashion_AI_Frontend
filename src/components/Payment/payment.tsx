@@ -30,7 +30,7 @@ export async function showRazorpayPayment({
   }
 
   try {
-    const data = await fetch("http://localhost:1337/razorpay", {
+    const data = await fetch("https://payment-api-8hsd.onrender.com", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount }),
